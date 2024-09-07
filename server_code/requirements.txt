@@ -1,6 +1,1 @@
-numpy
-pandas
-matplotlib
-scipy
-yfinance
-os
+
