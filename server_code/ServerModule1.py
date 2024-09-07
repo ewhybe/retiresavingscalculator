@@ -22,7 +22,7 @@ from io import StringIO
 @anvil.server.callable
 def import_csv_data_to_table():
     # Load the CSV file from assets
-    with anvil.media.load_file('_/resources/Female.csv') as csv_file:
+    with anvil.server.get_app_resource('_/theme/Female.csv') as csv_file:
         csv_content = csv_file.get_bytes().decode('utf-8')
         csv_reader = csv.reader(StringIO(csv_content))
         
@@ -34,4 +34,4 @@ def import_csv_data_to_table():
     return "CSV data successfully inserted into the table!"
 
 
-      
+  

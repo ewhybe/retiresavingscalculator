@@ -49,5 +49,6 @@ class Inputs(InputsTemplate):
 
   def CSV_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    anvil.server.call('import_csv_data_to_table')
+    anvil.server.call('import_csv_data_Female')
+    anvil.server.call('import_csv_data_Male')
   
