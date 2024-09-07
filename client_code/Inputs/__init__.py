@@ -1,5 +1,8 @@
 from ._anvil_designer import InputsTemplate
 from anvil import *
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.server
 import plotly.graph_objects as go
 
@@ -43,4 +46,8 @@ class Inputs(InputsTemplate):
     """This method is called when the button is clicked"""
     print("click")
     open_form('Results')
+
+  def CSV_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.server.call('import_csv_data_to_table')
   
