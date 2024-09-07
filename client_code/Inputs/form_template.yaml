@@ -45,16 +45,21 @@ components:
     name: label_8
     properties: {text: 'Do kolika let by ti měl příjem navíc vydržet?'}
     type: Label
-  - layout_properties: {grid_position: 'PODFYZ,YGYRMR'}
+  - data_bindings: []
+    layout_properties: {grid_position: 'PODFYZ,YGYRMR'}
     name: Death_drop_down
-    properties: {include_placeholder: true, placeholder: '85', tooltip: ''}
+    properties:
+      include_placeholder: true
+      items: []
+      placeholder: '85'
+      tooltip: ''
     type: DropDown
   - layout_properties: {grid_position: 'UGAJYV,QMLTXT'}
     name: label_4
     properties: {text: 'Kolik máš naspořeno?'}
     type: Label
   - layout_properties: {grid_position: 'YOCPBJ,HYKOSQ'}
-    name: text_box_1
+    name: Savings_box
     properties: {text: '1000000', type: number}
     type: TextBox
   - layout_properties: {grid_position: 'ELUGOM,VKSTZA'}
@@ -97,11 +102,6 @@ components:
     layout_properties: {grid_position: 'SCLPNM,CLBYHG'}
     name: Results_button
     properties: {align: center, spacing_above: large, text: 'Vypočítej potřebné úspory '}
-    type: Button
-  - event_bindings: {click: CSV_button_click}
-    layout_properties: {grid_position: 'MZQEGT,TXPJTQ'}
-    name: CSV_button
-    properties: {text: Nahraj CSV}
     type: Button
   layout_properties: {slot: default}
   name: column_panel_1
