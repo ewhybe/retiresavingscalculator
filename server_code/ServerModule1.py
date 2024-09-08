@@ -52,7 +52,10 @@ def process_form(Passed_values):
  
   # Calculate savings needed for retirement
   ages = range(PensionAge + 1, 100)
-  #SavingsAtRetirementAge = [ExpectedAnnuityPayment * 12 * ((1 - (1 + Roi/100) ** (RetireAge - age)) / (Roi/100)) for age in ages]
+  NecessarySavingsAtRetireAge = 12 * Income * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death-PensionAge))/(1/(Return-Growth-Inflation))
+  AnnuitySavings = (NecessarySavingsAtRetireAge * Return)/((1+Return)**(PensionAge - Age) - 1)
+  ConstantWageShareSavings = (NecessarySavingsAtRetireAge * (Return - Growth)) / ((1+Return)**(PensionAge - Age) - (1+Growth)**(PensionAge - Age))
+
   
   # Create DataFrame
   df = pd.DataFrame(
