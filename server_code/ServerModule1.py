@@ -24,10 +24,10 @@ from io import StringIO
 @anvil.server.callable
 def process_form(Passed_values):
   print(Passed_values)
-  Sex, Age, PensionAge, Income, Savings, Death, Return, Inflation, Growth = Passed_values.values()
-  Age = float(Age)
-  PensionAge = float(PensionAge)
-  Death = float(Death)
+  Sex, Age, PensionAge, Income,Savings, Death, Return, Inflation, Growth = Passed_values
+  Age = int(Age)
+  PensionAge = int(PensionAge)
+  Death = int(Death)
   Income = int(Income)
   Savings = int(Savings)
   Return = float(Return)/100
@@ -52,47 +52,60 @@ def process_form(Passed_values):
  
   # Calculate savings needed for retirement
   ages = range(PensionAge + 1, 100)
-  NecessarySavingsAtRetireAge = 12 * Income * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death-PensionAge))/(1/(Return-Growth-Inflation))
+  # Casculate income at PensionAge, i.e. Income adjusted for inflation and wage growth
+  IncomePensionAge = Income * (1+Inflation+Growth)**(PensionAge - Age)
+  
+  NecessarySavingsAtRetireAge = 12 * IncomePensionAge * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death-PensionAge))/(1/(Return-Growth-Inflation))
   AnnuitySavings = (NecessarySavingsAtRetireAge * Return)/((1+Return)**(PensionAge - Age) - 1)
   ConstantWageShareSavings = (NecessarySavingsAtRetireAge * (Return - Growth)) / ((1+Return)**(PensionAge - Age) - (1+Growth)**(PensionAge - Age))
 
-  
-  # Create DataFrame
-  df = pd.DataFrame(
-      {'Age': ages, 'SavingsAtRetirementAge': SavingsAtRetirementAge, 
-      'ProbabilityOfHasDiedM': [1 - MaleData.loc[MaleData['Age'] == age, 'Living'].values[0] / MaleData.loc[MaleData['Age'] == RetireAge, 'Living'].values[0] for age in ages],
-      'ProbabilityOfHasDiedF': [1 - FemaleData.loc[FemaleData['Age'] == age, 'Living'].values[0] / FemaleData.loc[FemaleData['Age'] == RetireAge, 'Living'].values[0] for age in ages]
-      })
-  
-  # Plotting the data
-  fig, ax1 = plt.subplots()
-  
-  # Plotting savings at retirement age
-  ax1.plot(df['Age'], df['SavingsAtRetirementAge'], color='green', label='Potřebné úspory')
-  ax1.set_xlabel(f'Věk dožití s požadovaným příjmem {ExpectedAnnuityPayment} měsíčně')
-  ax1.set_ylabel(f'Potřebné úspory na dožití s {ExpectedAnnuityPayment} měsíčně')
-  ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,.0f}".format(x)))
-  
-  # Creating secondary y-axis
-  ax2 = ax1.twinx()
-  
-  # Plotting probabilities
-  ax2.plot(df['Age'], df['ProbabilityOfHasDiedM'], color='blue', label='Muži')
-  ax2.plot(df['Age'], df['ProbabilityOfHasDiedF'], color='red', label='Ženy')
-  ax2.set_ylabel('Pravděpodobnost, že je člověk v daném věku po smrti')
-  # Add vertical line for DeathAge
-  ax2.axvline(x=DeathAge, color='black', linestyle='--', label=f'Věk dožití s příjmem {ExpectedAnnuityPayment}' )
-  # Add horizontal line for NecessarySavings
-  ax1.axhline(y=NecessarySavings, color='orange', linestyle='--', label=f'Potřebné úspory na příjem {ExpectedAnnuityPayment} měsíčně')
-  
-  # Displaying legend
-  ax1.legend(loc='upper left')
-  # Displaying legend
-  ax2.legend(loc='lower right')
-  
-  
-  # Displaying the plot
-  st.pyplot(fig)
+  pass
+#    # Create DataFrame
+#    df = pd.DataFrame(
+#        {'Age': ages, 'SavingsAtRetirementAge': SavingsAtRetirementAge, 
+#        'ProbabilityOfHasDiedM': [1 - MaleData.loc[MaleData['Age'] == age, 'Living'].values[0] / MaleData.loc[MaleData['Age'] == RetireAge, 'Living'].values[0] for age in ages],
+#        'ProbabilityOfHasDiedF': [1 - FemaleData.loc[FemaleData['Age'] == age, 'Living'].values[0] / FemaleData.loc[FemaleData['Age'] == RetireAge, 'Living'].values[0] for age in ages]
+#        })
+#    
+#    # Plotting the data
+#    fig, ax1 = plt.subplots()
     
-  
+#    # Plotting savings at retirement age
+#    ax1.plot(df['Age'], df['SavingsAtRetirementAge'], color='green', label='Potřebné úspory')
+#    ax1.set_xlabel(f'Věk dožití s požadovaným příjmem {ExpectedAnnuityPayment} měsíčně')
+#    ax1.set_ylabel(f'Potřebné úspory na dožití s {ExpectedAnnuityPayment} měsíčně')
+#    ax1.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,.0f}".format(x)))
+#    
+#    # Creating secondary y-axis
+#    ax2 = ax1.twinx()
+#    
+#    # Plotting probabilities
+#    ax2.plot(df['Age'], df['ProbabilityOfHasDiedM'], color='blue', label='Muži')
+#    ax2.plot(df['Age'], df['ProbabilityOfHasDiedF'], color='red', label='Ženy')
+#    ax2.set_ylabel('Pravděpodobnost, že je člověk v daném věku po smrti')
+#    # Add vertical line for DeathAge
+#    ax2.axvline(x=DeathAge, color='black', linestyle='--', label=f'Věk dožití s příjmem {ExpectedAnnuityPayment}' )
+#    # Add horizontal line for NecessarySavings
+#   ax1.axhline(y=NecessarySavings, color='orange', linestyle='--', label=f'Potřebné úspory na příjem {ExpectedAnnuityPayment} měsíčně')
+#    
+#    # Displaying legend
+#    ax1.legend(loc='upper left')
+#    # Displaying legend
+#    ax2.legend(loc='lower right')
     
+    
+    # Displaying the plot
+#    st.pyplot(fig)
+      
+    
+  return {
+    "ProbabilityOfHasDied"  : ProbabilityOfHasDied,
+    "IncomePensionAge" : IncomePensionAge,
+    "NecessarySavingsAtRetireAge" : NecessarySavingsAtRetireAge,
+    "AnnuitySavings" : AnnuitySavings,
+    "ConstantWageShareSavings" : ConstantWageShareSavings
+  }
+      
+  
+ 
+  

@@ -63,7 +63,8 @@ class Inputs(InputsTemplate):
     
     #create dictionary from form values
     
-    Passed_values = {'Sex':Sex, 'Age':Age, 'PensionAge':PensionAge, 'Income':Income, 'Savings':Savings, 'Death':Death, 'Return':Return, 'Inflation':Inflation, 'Growth':Growth}
+    #Passed_values = {'Sex':Sex, 'Age':Age, 'PensionAge':PensionAge, 'Income':Income, 'Savings':Savings, 'Death':Death, 'Return':Return, 'Inflation':Inflation, 'Growth':Growth}
+    Passed_values = [Sex, Age, PensionAge, Income,Savings, Death, Return, Inflation, Growth]
     #pass to serveer
     anvil.server.call('process_form',Passed_values)
     
