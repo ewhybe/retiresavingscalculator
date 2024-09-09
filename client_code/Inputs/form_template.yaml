@@ -35,7 +35,7 @@ components:
     type: DropDown
   - layout_properties: {grid_position: 'EXQZAE,ZXZVHU'}
     name: label_3
-    properties: {text: 'Kolik cheš mí navíc v důchodu každý měsíc? Zadej hodnotu v dnešních cenách, tzn. 1000 = kolik si dnes koupím za 1000 Kč.'}
+    properties: {text: 'Kolik cheš mí navíc v důchodu každý ROK? Zadej hodnotu v dnešních cenách, tzn. 1000 = kolik si dnes koupím za 1000 Kč.'}
     type: Label
   - layout_properties: {grid_position: 'GIOCFQ,PGUWDF'}
     name: Income_box

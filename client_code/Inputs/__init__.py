@@ -63,21 +63,15 @@ class Inputs(InputsTemplate):
     
     #Pass values to server
     Passed_values = [Sex, Age, PensionAge, Income,Savings, Death, Return, Inflation, Growth]
-    #pass to serveer
-    anvil.server.call('process_form',Passed_values)
-    
+    # call the server and "process_form" function with Passed_values, return outputr
+    output = anvil.server.call('process_form',Passed_values)
+    #unpack output 
+    IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied = output
     # Create and display labels for the variables
-    self.Sex_label.text = f"Sex: {Sex}"
-    self.Age_label.text = f"Age: {Age}"
-    self.PensionAge_label.text = f"Pension Age: {PensionAge}"
-    self.Income_label.text = f"Income: {Income}"
-    self.Savings_label.text = f"Savings: {Savings}"
-    self.Death_label.text = f"Expected Death Age: {Death}"
-    self.Return_label.text = f"Return on Savings: {Return}"
-    self.Inflation_label.text = f"Inflation: {Inflation}"
-    self.Growth_label.text = f"Growth: {Growth}"
+    print (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied)
+ 
 
-    open_form('Results')
+   
 
 
   

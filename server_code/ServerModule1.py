@@ -39,26 +39,32 @@ def process_form(Passed_values):
   Female_data = {0: 100000, 1: 99797, 2: 99777, 3: 99766, 4: 99754, 5: 99741, 6: 99727, 7: 99715, 8: 99706, 9: 99698, 10: 99691, 11: 99684, 12: 99676, 13: 99668, 14: 99657, 15: 99643, 16: 99628, 17: 99609, 18: 99588, 19: 99565, 20: 99540, 21: 99515, 22: 99489, 23: 99463, 24: 99438, 25: 99413, 26: 99387, 27: 99362, 28: 99336, 29: 99308, 30: 99279, 31: 99247, 32: 99212, 33: 99174, 34: 99133, 35: 99087, 36: 99037, 37: 98982, 38: 98923, 39: 98859, 40: 98790, 41: 98715, 42: 98634, 43: 98546, 44: 98448, 45: 98342, 46: 98224, 47: 98094, 48: 97950, 49: 97791, 50: 97616, 51: 97422, 52: 97208, 53: 96972, 54: 96711, 55: 96424, 56: 96107, 57: 95758, 58: 95374, 59: 94951, 60: 94487, 61: 93979, 62: 93422, 63: 92815, 64: 92152, 65: 91430, 66: 90643, 67: 89784, 68: 88846, 69: 87820, 70: 86693, 71: 85454, 72: 84089, 73: 82584, 74: 80926, 75: 79099, 76: 77089, 77: 74882, 78: 72463, 79: 69818, 80: 66930, 81: 63788, 82: 60381, 83: 56709, 84: 52781, 85: 48618, 86: 44261, 87: 39762, 88: 35186, 89: 30613, 90: 26132, 91: 21839, 92: 17827, 93: 14180, 94: 10966, 95: 8224, 96: 5968, 97: 4181, 98: 2823, 99: 1834, 100: 1145, 101: 686, 102: 394, 103: 218, 104: 115, 105: 59}
 
   # choose the right dataset by sex
-  if Sex == 'Male':
+  if Sex == 'Muž':
     death_data = Male_data
   else:
     death_data = Female_data
 
   # Calculate the probability of having died by the time of retirement (sex dependent)
-  LivingAtRetireAge = death_data[Age]
+  LivingAtRetireAge = death_data[PensionAge]
   LivingAtDeathAge = death_data[Death]
   ProbabilityOfHasDied = 1 - LivingAtDeathAge / LivingAtRetireAge
   
  
   # Calculate savings needed for retirement
-  ages = range(PensionAge + 1, 100)
+  ages = range(PensionAge + 1, Death)
   # Casculate income at PensionAge, i.e. Income adjusted for inflation and wage growth
   IncomePensionAge = Income * (1+Inflation+Growth)**(PensionAge - Age)
-  
-  NecessarySavingsAtRetireAge = 12 * IncomePensionAge * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death-PensionAge))/(1/(Return-Growth-Inflation))
+
+  NecessarySavingsAtRetireAge = IncomePensionAge * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death - PensionAge))/(1-((1+Growth+Inflation)/(1+Return+Inflation)))
   AnnuitySavings = (NecessarySavingsAtRetireAge * Return)/((1+Return)**(PensionAge - Age) - 1)
   ConstantWageShareSavings = (NecessarySavingsAtRetireAge * (Return - Growth)) / ((1+Return)**(PensionAge - Age) - (1+Growth)**(PensionAge - Age))
 
+  
+  output = (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityOfHasDied)
+
+  # create dataset
+  
+  return output
   pass
 #    # Create DataFrame
 #    df = pd.DataFrame(
@@ -98,13 +104,7 @@ def process_form(Passed_values):
 #    st.pyplot(fig)
       
     
-  return {
-    "ProbabilityOfHasDied"  : ProbabilityOfHasDied,
-    "IncomePensionAge" : IncomePensionAge,
-    "NecessarySavingsAtRetireAge" : NecessarySavingsAtRetireAge,
-    "AnnuitySavings" : AnnuitySavings,
-    "ConstantWageShareSavings" : ConstantWageShareSavings
-  }
+
       
   
  
