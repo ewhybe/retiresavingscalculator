@@ -48,6 +48,9 @@ class Inputs(InputsTemplate):
     self.Growth_drop_down.items = growth_list
     self.Growth_drop_down.selected_value = '1.5'
 
+
+  
+    
   def Results_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     Sex = self.Sex_drop_down.selected_value
@@ -66,11 +69,26 @@ class Inputs(InputsTemplate):
     # call the server and "process_form" function with Passed_values, return outputr
     output = anvil.server.call('process_form',Passed_values)
     #unpack output 
-    IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied = output
+    IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied, SavingsBuildup = output
     # Create and display labels for the variables
-    print (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied)
+    print (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied, SavingsBuildup)
  
-
+    # Plot
+    self.plot_1.data = [
+    go.Scatter(
+        x=SavingsBuildup['Age'],  # x-axis data
+        y=SavingsBuildup['Saved'],  # y-axis data
+        mode='lines',  # Line chart
+        name='Savings Buildup'
+    )
+    ]
+    
+    # Optionally, customize the layout (axis labels, title, etc.)
+    self.plot_1.layout = {
+        'title': 'Savings Buildup Over Time',
+        'xaxis': {'title': 'Age'},
+        'yaxis': {'title': 'Amount Saved (in $)'}
+    }
    
 
 

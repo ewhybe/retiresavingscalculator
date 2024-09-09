@@ -55,12 +55,20 @@ def process_form(Passed_values):
   # Casculate income at PensionAge, i.e. Income adjusted for inflation and wage growth
   IncomePensionAge = Income * (1+Inflation+Growth)**(PensionAge - Age)
 
+  #nutné ověřit vzorce
   NecessarySavingsAtRetireAge = IncomePensionAge * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death - PensionAge))/(1-((1+Growth+Inflation)/(1+Return+Inflation)))
   AnnuitySavings = (NecessarySavingsAtRetireAge * Return)/((1+Return)**(PensionAge - Age) - 1)
-  ConstantWageShareSavings = (NecessarySavingsAtRetireAge * (Return - Growth)) / ((1+Return)**(PensionAge - Age) - (1+Growth)**(PensionAge - Age))
+  ConstantWageShareSavings = (NecessarySavingsAtRetireAge * (Return + Inflation - Growth)) / ((1+Return + Inflation)**(PensionAge - Age) - (1+Growth)**(PensionAge - Age))
 
+  # savings build-up
+  WorkYears = range(Age + 1, PensionAge)
+  SavingsBuildup = {
+    "Age" : [Age + 1 + i for i in range(PensionAge - Age + 1)],
+    "Saved" : [ConstantWageShareSavings * ((1 + Return + Inflation)**(WorkYear - Age) - (1 + Growth + Inflation)**(WorkYear - Age)) / (Return - Growth + Inflation) for WorkYear in WorkYears]
+  }
   
-  output = (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityOfHasDied)
+  
+  output = (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityOfHasDied, SavingsBuildup)
 
   # create dataset
   
