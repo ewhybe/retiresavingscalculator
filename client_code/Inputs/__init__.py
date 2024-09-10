@@ -17,14 +17,14 @@ class Inputs(InputsTemplate):
     # Any code you write here will run before the form opens.
     
     # Define a list of years from 1954 to 2005
-    year_list = [str(x) for x in range(20,60)]
+    year_list = [str(x) for x in range(20,66)]
     # Set the items of the dropdown to be the years
     self.Age_drop_down.items = year_list
     self.Age_drop_down.selected_value = '40'
 
 
     # Define age of pension
-    pension_age_list = [str(x) for x in range(50,75)]
+    pension_age_list = [str(x) for x in range(50,76)]
     self.PensionAge_drop_down.items = pension_age_list
     self.PensionAge_drop_down.selected_value = '65'
 
@@ -71,7 +71,7 @@ class Inputs(InputsTemplate):
     #unpack output 
     IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied, SavingsBuildup = output
     # Create and display labels for the variables
-    print (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied, SavingsBuildup)
+    print ('IncomePensionAge ', IncomePensionAge, 'NecessarySavingsAtRetireAge ', NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied, SavingsBuildup)
  
     # Plot
     self.plot_1.data = [

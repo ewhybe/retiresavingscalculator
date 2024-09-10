@@ -29,10 +29,21 @@ def process_form(Passed_values):
   PensionAge = int(PensionAge)
   Death = int(Death)
   Income = int(Income)
-  Savings = int(Savings)
+  Wealth = int(Savings)
   Return = float(Return)/100
   Inflation = float(Inflation)/100
   Growth = float(Growth)/100
+
+  r = Return # real return
+  i = Inflation
+  g = Growth # real growth
+  # nominal return as inflation + return and nominal growth as growth + inflation
+  nr = r + i
+  ng = g + i
+
+  # years in retirement (yr] and years working (yw]
+  yr = Death - PensionAge
+  yw = PensionAge - Age
   
   # Dictionary of CZ death tables, shows surving number of people by sex from the original population of 100k in year 0 by year of age
   Male_data = {0: 100000, 1: 99774, 2: 99752, 3: 99741, 4: 99730, 5: 99721, 6: 99713, 7: 99706, 8: 99699, 9: 99692, 10: 99685, 11: 99677, 12: 99668, 13: 99657, 14: 99645, 15: 99628, 16: 99606, 17: 99577, 18: 99540, 19: 99493, 20: 99438, 21: 99374, 22: 99306, 23: 99235, 24: 99162, 25: 99090, 26: 99018, 27: 98947, 28: 98874, 29: 98799, 30: 98720, 31: 98636, 32: 98545, 33: 98446, 34: 98341, 35: 98228, 36: 98107, 37: 97978, 38: 97840, 39: 97695, 40: 97541, 41: 97377, 42: 97202, 43: 97014, 44: 96811, 45: 96591, 46: 96351, 47: 96087, 48: 95797, 49: 95475, 50: 95118, 51: 94722, 52: 94284, 53: 93801, 54: 93270, 55: 92689, 56: 92054, 57: 91361, 58: 90603, 59: 89773, 60: 88861, 61: 87859, 62: 86757, 63: 85546, 64: 84220, 65: 82773, 66: 81202, 67: 79506, 68: 77682, 69: 75728, 70: 73643, 71: 71424, 72: 69077, 73: 66607, 74: 64017, 75: 61306, 76: 58469, 77: 55503, 78: 52412, 79: 49202, 80: 45889, 81: 42491, 82: 39030, 83: 35520, 84: 31978, 85: 28431, 86: 24921, 87: 21498, 88: 18222, 89: 15150, 90: 12335, 91: 9821, 92: 7636, 93: 5781, 94: 4253, 95: 3035, 96: 2097, 97: 1401, 98: 903, 99: 561, 100: 336, 101: 194, 102: 108, 103: 58, 104: 30, 105: 15}
@@ -52,22 +63,61 @@ def process_form(Passed_values):
  
   # Calculate savings needed for retirement
   ages = range(PensionAge + 1, Death)
+  
   # Casculate income at PensionAge, i.e. Income adjusted for inflation and wage growth
-  IncomePensionAge = Income * (1+Inflation+Growth)**(PensionAge - Age)
+  IncomePensionAge = Income * (1 + ng) ** (yw)
 
-  #nutné ověřit vzorce
-  NecessarySavingsAtRetireAge = IncomePensionAge * (1-((1+Growth+Inflation)/(1+Return+Inflation))**(Death - PensionAge))/(1-((1+Growth+Inflation)/(1+Return+Inflation)))
-  AnnuitySavings = (NecessarySavingsAtRetireAge * Return)/((1+Return)**(PensionAge - Age) - 1)
-  ConstantWageShareSavings = (NecessarySavingsAtRetireAge * (Return + Inflation - Growth)) / ((1+Return + Inflation)**(PensionAge - Age) - (1+Growth)**(PensionAge - Age))
+  # Calculate necessary savings at PensionAge given desired income at pension age
+  #NecessarySavingsAtRetireAge = IncomePensionAge * (1- ((1 + ng)/(1 + nr))**(yr))/(1-((1 + ng)/(1 + nr)))
+  NecessarySavingsAtRetireAge = IncomePensionAge * (1- ((1 + ng)/(1 + nr)) ** yr)/(nr - ng)
+  print ('growth difference', nr-ng)
+  print ('ratio ', (1+ng)/(1+nr))
+  print ('ratio to power ', ((1 + ng)/(1 + nr)) ** yr) 
+  print ('subtract from 1 ', (1- ((1 + ng)/(1 + nr)) ** yr))
+  try: 
+    AnnuitySavings = NecessarySavingsAtRetireAge * (nr / ((1 + nr) ** yw - 1)) 
+  except: AnnuitySavings = 9999999999
 
+  print ('annual saving ', AnnuitySavings)
+  
+  try:
+    ConstantWageShareSavings = NecessarySavingsAtRetireAge * ((nr - ng) / ((1 + nr)** yw - (1 + ng)** yw))
+  except:
+    ConstantWageShareSavings = 9999999999
+
+  print ('ConstantWageShareSavings ', ConstantWageShareSavings)
+
+ 
   # savings build-up
-  WorkYears = range(Age + 1, PensionAge)
+  # prepare list to fill in with calculated ages and savings in each age
+  WorkYears = [Age]
+  SavingsCumul = []
+  Deposits = []
+  Savings = []
+  Saving = Wealth
+  Deposit = ConstantWageShareSavings
+  i = 0
+  for WorkYear in range (Age+1, PensionAge+1):
+    # increase savings by interest
+    Saving = Saving * (1 + nr) 
+    # deposit new money
+    Deposit = Deposit * (1 + ng) 
+    # add up
+    Saving = Saving + Deposit
+    i = i + 1
+    # add calculated saving and year in lists
+    WorkYears.append(WorkYear)
+    SavingsCumul.append(Saving)
+    Deposits.append(Deposit)
+    Savings.append(Saving)
+  # prepare savings build-up in dictionary
   SavingsBuildup = {
-    "Age" : [Age + 1 + i for i in range(PensionAge - Age + 1)],
-    "Saved" : [ConstantWageShareSavings * ((1 + Return + Inflation)**(WorkYear - Age) - (1 + Growth + Inflation)**(WorkYear - Age)) / (Return - Growth + Inflation) for WorkYear in WorkYears]
+    "Age" : WorkYears,
+    "Saved" : SavingsCumul,
+    "Deposits:" : Deposits,
+    "Savings:" : Savings
   }
-  
-  
+  print ('Build-up ', SavingsBuildup)
   output = (IncomePensionAge, NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityOfHasDied, SavingsBuildup)
 
   # create dataset
