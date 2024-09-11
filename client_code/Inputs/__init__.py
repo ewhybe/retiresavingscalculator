@@ -48,8 +48,8 @@ class Inputs(InputsTemplate):
     self.Growth_drop_down.items = growth_list
     self.Growth_drop_down.selected_value = '1.5'
 
-
-  
+    self.
+    
     
   def Results_button_click(self, **event_args):
     """This method is called when the button is clicked"""
