@@ -115,7 +115,7 @@ components:
     - components:
       - layout_properties: {col_xs: 0, row: JGTHTJ, width_xs: 3}
         name: label_Savings
-        properties: {text: Nutné úspory k odchodu do důchodu}
+        properties: {align: center, text: Potřebné úspory}
         type: Label
       - layout_properties: {col_xs: 1, row: JGTHTJ, width_xs: 3}
         name: label_P
