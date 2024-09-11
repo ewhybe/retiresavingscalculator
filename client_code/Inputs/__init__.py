@@ -47,12 +47,15 @@ class Inputs(InputsTemplate):
     growth_list = [str(x * 0.5) for x in range(0,6)]
     self.Growth_drop_down.items = growth_list
     self.Growth_drop_down.selected_value = '1.5'
+
+    #button properties
+    self.Results_button.background = "blue"
     
     indexace = float(self.Inflation_drop_down.selected_value) + float(self.Growth_drop_down.selected_value)
     
-    self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst k odhodu do důchodu:" 
-    self.label_P.text = "Pravděpodobnost, že vydrží do " + self.Death_drop_down.selected_value + "let"
-    self.label_ConstWageSaving.text = "Investice 1. rok následně zvýšovaná vždy o " + str(indexace) + "%"
+    self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke odchodu do důchodu:" 
+    self.label_P.text = "Pravděpodobnost, že přežijete cílový věk " + self.Death_drop_down.selected_value + "let:"
+    self.label_ConstWageSaving.text = "Investice 1. rok následně zvýšovaná vždy o " + str(indexace) + "%:"
     self.label_Annuity.text = "Rovnoměrné každoroční spoření:"
 
 
@@ -72,7 +75,7 @@ class Inputs(InputsTemplate):
     Age = int(Age)
     PensionAge = int(PensionAge)
     Death = int(Death)
-    Income = int(Income)
+    Income = int(Income)*12
     Wealth = int(Savings)
     Return = float(Return)/100
     Inflation = float(Inflation)/100
@@ -109,7 +112,7 @@ class Inputs(InputsTemplate):
   
     # Calculate necessary savings at PensionAge given desired income at pension age
     #NecessarySavingsAtRetireAge = IncomePensionAge * (1- ((1 + ng)/(1 + nr))**(yr))/(1-((1 + ng)/(1 + nr)))
-    NecessarySavingsAtRetireAge = IncomePensionAge * (1- ((1 + ng)/(1 + nr)) ** yr)/(nr - ng)
+    NecessarySavingsAtRetireAge = IncomePensionAge * (1- ((1 + ng)/(1 + nr)) ** yr)/(nr - ng) - Wealth
     
     try: 
       AnnuitySavings = NecessarySavingsAtRetireAge * (nr / ((1 + nr) ** yw - 1)) 
@@ -119,12 +122,18 @@ class Inputs(InputsTemplate):
     try:
       ConstantWageShareSavings = NecessarySavingsAtRetireAge * ((nr - ng) / ((1 + nr)** yw - (1 + ng)** yw))
     except:
-      ConstantWageShareSavings = 9999999999
+      ConstantWageShareSavings = 99999999
 
-    self.label_NecessarySavings.text = str(f"{NecessarySavingsAtRetireAge:,.0f}")
-    self.label_AnnuitySaving.text = str(f"{AnnuitySavings:,.0f}")
-    self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}")
-    self.label_PHasDied = str(f"{ProbabilityHasDied:,.2%}")
+    if NecessarySavingsAtRetireAge < 0:
+      self.label_NecessarySavings.text = "Již máš našetřeno"
+      self.label_AnnuitySaving.text = ""
+      self.label_IndexedSaving.text = ""
+      self.label_PDied.text = ""
+    else:
+      self.label_NecessarySavings.text = str(f"{NecessarySavingsAtRetireAge:,.0f}")
+      self.label_AnnuitySaving.text = str(f"{AnnuitySavings:,.0f}") + "/ rok"
+      self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + "/ rok"
+      self.label_PDied.text = str(f"{1-ProbabilityHasDied:,.0%}")
   
     # savings build-up
     # prepare list to fill in with calculated ages and savings in each age

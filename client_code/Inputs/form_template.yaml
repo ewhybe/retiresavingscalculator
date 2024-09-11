@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {grid_position: 'KOHAVI,VGULUV'}
     name: Header_text_box
-    properties: {bold: true, enabled: false, text: Kalkulačka úspor na penzi}
+    properties: {bold: true, enabled: false, font_size: 20, text: Kalkulačka úspor na penzi}
     type: TextBox
   - data_bindings:
     - {code: '''Muž''', property: selected_value, writeback: false}
@@ -35,11 +35,11 @@ components:
     type: DropDown
   - layout_properties: {grid_position: 'EXQZAE,ZXZVHU'}
     name: label_3
-    properties: {text: 'Kolik cheš mí navíc v důchodu každý ROK? Zadej hodnotu v dnešních cenách, tzn. 1000 = kolik si dnes koupím za 1000 Kč.'}
+    properties: {text: 'Kolik cheš mí navíc měsíčně k důchodu? Zadej hodnotu v dnešních cenách, tzn. 10 000 = kolik si dnes koupím za 10 000 Kč.'}
     type: Label
   - layout_properties: {grid_position: 'GIOCFQ,PGUWDF'}
     name: Income_box
-    properties: {text: '5000', type: number}
+    properties: {text: '10000', type: number}
     type: TextBox
   - layout_properties: {grid_position: 'JYWNOD,HQRBSK'}
     name: label_8
@@ -101,42 +101,42 @@ components:
   - event_bindings: {click: Results_button_click}
     layout_properties: {grid_position: 'HPFLOB,AUUPSW'}
     name: Results_button
-    properties: {align: center, spacing_above: large, text: 'Vypočítej potřebné úspory '}
+    properties: {align: center, bold: true, spacing_above: large, text: 'Vypočítej potřebné úspory '}
     type: Button
   - components:
-    - layout_properties: {col_xs: 0, row: ICJRQR, width_xs: 3}
+    - layout_properties: {col_xs: 0, row: ICJRQR, width_xs: 5}
       name: label_Savings
-      properties: {align: left, text: ''}
+      properties: {align: left, font_size: 16, text: ''}
       type: Label
-    - layout_properties: {col_xs: 3, row: ICJRQR, width_xs: 3}
+    - layout_properties: {col_xs: 4, row: ICJRQR, width_xs: 2}
       name: label_NecessarySavings
-      properties: {align: right}
+      properties: {align: right, font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 0, row: MRDCLJ, width_xs: 3}
+    - layout_properties: {col_xs: 0, row: MRDCLJ, width_xs: 4}
       name: label_ConstWageSaving
-      properties: {}
+      properties: {font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 3, row: MRDCLJ, width_xs: 3}
+    - layout_properties: {col_xs: 5, row: MRDCLJ, width_xs: 2}
       name: label_IndexedSaving
-      properties: {align: right}
+      properties: {align: right, font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 0, row: JHXYWU, width_xs: 3}
+    - layout_properties: {col_xs: 0, row: JHXYWU, width_xs: 4}
       name: label_Annuity
-      properties: {}
+      properties: {font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 3, row: JHXYWU, width_xs: 3}
+    - layout_properties: {col_xs: 5, row: JHXYWU, width_xs: 2}
       name: label_AnnuitySaving
-      properties: {align: right}
+      properties: {align: right, font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 0, row: DGKMVY, width_xs: 3}
+    - layout_properties: {col_xs: 0, row: JOJBNW, width_xs: 4}
       name: label_P
-      properties: {text: ''}
+      properties: {font_size: 16, text: ''}
       type: Label
-    - layout_properties: {col_xs: 3, row: DGKMVY, width_xs: 3}
-      name: label_PHasDied
-      properties: {align: right}
+    - layout_properties: {col_xs: 5, row: JOJBNW, width_xs: 2}
+      name: label_PDied
+      properties: {align: right, font_size: 16}
       type: Label
-    layout_properties: {grid_position: 'BHTWMZ,LLXSLJ'}
+    layout_properties: {grid_position: 'AMLWRC,BCWUCC'}
     name: grid_panel_1
     properties: {}
     type: GridPanel
