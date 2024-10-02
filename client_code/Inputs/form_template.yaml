@@ -46,6 +46,7 @@ components:
     properties: {text: 'Do kolika let by ti měl příjem navíc vydržet?'}
     type: Label
   - data_bindings: []
+    event_bindings: {change: Death_drop_down_change}
     layout_properties: {grid_position: 'PODFYZ,YGYRMR'}
     name: Death_drop_down
     properties:

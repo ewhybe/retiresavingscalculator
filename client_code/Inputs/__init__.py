@@ -184,6 +184,10 @@ class Inputs(InputsTemplate):
     #    'xaxis': {'title': 'Age'},
     #    'yaxis': {'title': 'Amount Saved (in $)'}
     #}
+
+  def Death_drop_down_change(self, **event_args):
+    """This method is called when an item is selected"""
+    pass
    
 
 
