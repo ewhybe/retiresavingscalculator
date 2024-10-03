@@ -51,11 +51,11 @@ class Inputs(InputsTemplate):
     #button properties
     self.Results_button.background = "blue"
     
-    indexace = float(self.Inflation_drop_down.selected_value) + float(self.Growth_drop_down.selected_value)
+    self.indexace = float(self.Inflation_drop_down.selected_value) + float(self.Growth_drop_down.selected_value)
     
-    self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke odchodu do důchodu:" 
+    self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke dni odchodu do důchodu:" 
     self.label_P.text = "Pravděpodobnost, že přežijete cílový věk " + self.Death_drop_down.selected_value + "let:"
-    self.label_ConstWageSaving.text = "Investice 1. rok následně zvýšovaná vždy o " + str(indexace) + "%:"
+    self.label_ConstWageSaving.text = "Investice 1. rok následně zvyšovaná vždy o inflaci + reálný růst"
     self.label_Annuity.text = "Rovnoměrné každoroční spoření:"
 
 
@@ -71,6 +71,8 @@ class Inputs(InputsTemplate):
     Return = self.Return_drop_down.selected_value
     Inflation = self.Inflation_drop_down.selected_value
     Growth = self.Growth_drop_down.selected_value
+    Indexace = self.indexace/100
+  
 
     Age = int(Age)
     PensionAge = int(PensionAge)
@@ -125,21 +127,26 @@ class Inputs(InputsTemplate):
       ConstantWageShareSavings = 99999999
 
     if NecessarySavingsAtRetireAge < 0:
-     
-      
-      
+      self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke dni odchodu do důchodu:" 
+      self.label_P.text = "Pravděpodobnost, že přežijete cílový věk " + self.Death_drop_down.selected_value + "let:"
+      self.label_ConstWageSaving.text = "Investice 1. rok následně zvyšovaná vždy o " + str(self.indexace) + "%:"
+      self.label_Annuity.text = "Rovnoměrné každoroční spoření:"
+           
       
       self.label_NecessarySavings.text = "Již máš našetřeno"
       self.label_AnnuitySaving.text = ""
       self.label_IndexedSaving.text = ""
       self.label_PDied.text = ""
     else:
-
+      self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke dni odchodu do důchodu:" 
+      self.label_P.text = "Pravděpodobnost, že přežijete cílový věk " + self.Death_drop_down.selected_value + "let:"
+      self.label_ConstWageSaving.text = "Investice 1. rok následně zvyšovaná vždy o inflaci + reálný růst"
+      self.label_Annuity.text = "Rovnoměrné každoroční spoření:"
       
       
       self.label_NecessarySavings.text = str(f"{NecessarySavingsAtRetireAge:,.0f}")
       self.label_AnnuitySaving.text = str(f"{AnnuitySavings:,.0f}") + "/ rok"
-      self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + "/ rok"
+      self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + " v 1. roce, poté + " + str(f"{Indexace:,.1%}" + " ročně")
       self.label_PDied.text = str(f"{1-ProbabilityHasDied:,.0%}")
   
     # savings build-up

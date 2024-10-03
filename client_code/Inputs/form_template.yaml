@@ -50,7 +50,7 @@ components:
     layout_properties: {grid_position: 'PODFYZ,YGYRMR'}
     name: Death_drop_down
     properties:
-      include_placeholder: true
+      include_placeholder: false
       items: []
       placeholder: '85'
       tooltip: ''
@@ -59,9 +59,10 @@ components:
     name: label_4
     properties: {text: 'Kolik máš naspořeno?'}
     type: Label
-  - layout_properties: {grid_position: 'YOCPBJ,HYKOSQ'}
+  - data_bindings: []
+    layout_properties: {grid_position: 'YOCPBJ,HYKOSQ'}
     name: Savings_box
-    properties: {text: '1000000', type: number}
+    properties: {text: '500000', type: number}
     type: TextBox
   - layout_properties: {grid_position: 'ELUGOM,VKSTZA'}
     name: label_5
@@ -70,7 +71,7 @@ components:
   - layout_properties: {grid_position: 'PKEBXB,WFSLWT'}
     name: Return_drop_down
     properties:
-      include_placeholder: true
+      include_placeholder: false
       items: ['1']
       placeholder: '1.0'
       tooltip: Odhadované zhodnocení úspor po odečtení inflace. "0" = zhodnotím tak, abych pokryl inflaci. 1% je pro většinu úspor v ČR spíš optimistické dlouhodobé zhodnocení.
@@ -82,21 +83,21 @@ components:
   - layout_properties: {grid_position: 'ZZOVKO,OQPOGB'}
     name: Inflation_drop_down
     properties:
-      include_placeholder: true
+      include_placeholder: false
       items: []
-      placeholder: '3.0'
+      placeholder: ''
       tooltip: Průměrná inflace od roku 2000 je cca 3.1%
     type: DropDown
   - layout_properties: {grid_position: 'YAESTJ,BRSTAG'}
     name: label_7
-    properties: {text: Průměrný růst ekonomiky (mezd) v %}
+    properties: {text: Průměrný  reálný růst ekonomiky (mezd) v %}
     type: Label
   - layout_properties: {grid_position: 'POYSDY,EADCGW'}
     name: Growth_drop_down
     properties:
-      include_placeholder: true
+      include_placeholder: false
       items: []
-      placeholder: '1.5'
+      placeholder: ''
       tooltip: Zhodnocení o inflaci je nedostatečné. Růst mezd vede k vyššímu "normálu". V roce 2000 byla průměrná mzda cca 13.000 Kč. 1.000 Kč (tedy cca 8% průměrné mzdy) zhodnocené o inflaci v roce 2024 představuje cca 2.100 Kč. To je pouze cca 4.7% průměrné mzdy, vnímaná hodnota je tak téměř o polovinu menší.
     type: DropDown
   - event_bindings: {click: Results_button_click}
@@ -109,7 +110,7 @@ components:
       name: label_Savings
       properties: {align: left, font_size: 16, text: ''}
       type: Label
-    - layout_properties: {col_xs: 4, row: ICJRQR, width_xs: 2}
+    - layout_properties: {col_xs: 4, row: ICJRQR, width_xs: 3}
       name: label_NecessarySavings
       properties: {align: right, font_size: 16}
       type: Label
@@ -117,7 +118,7 @@ components:
       name: label_ConstWageSaving
       properties: {font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 5, row: MRDCLJ, width_xs: 2}
+    - layout_properties: {col_xs: 5, row: MRDCLJ, width_xs: 3}
       name: label_IndexedSaving
       properties: {align: right, font_size: 16}
       type: Label
@@ -125,7 +126,7 @@ components:
       name: label_Annuity
       properties: {font_size: 16}
       type: Label
-    - layout_properties: {col_xs: 5, row: JHXYWU, width_xs: 2}
+    - layout_properties: {col_xs: 5, row: JHXYWU, width_xs: 3}
       name: label_AnnuitySaving
       properties: {align: right, font_size: 16}
       type: Label
@@ -133,7 +134,7 @@ components:
       name: label_P
       properties: {font_size: 16, text: ''}
       type: Label
-    - layout_properties: {col_xs: 5, row: JOJBNW, width_xs: 2}
+    - layout_properties: {col_xs: 5, row: JOJBNW, width_xs: 3}
       name: label_PDied
       properties: {align: right, font_size: 16}
       type: Label
