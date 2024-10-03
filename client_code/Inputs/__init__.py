@@ -125,11 +125,18 @@ class Inputs(InputsTemplate):
       ConstantWageShareSavings = 99999999
 
     if NecessarySavingsAtRetireAge < 0:
+     
+      
+      
+      
       self.label_NecessarySavings.text = "Již máš našetřeno"
       self.label_AnnuitySaving.text = ""
       self.label_IndexedSaving.text = ""
       self.label_PDied.text = ""
     else:
+
+      
+      
       self.label_NecessarySavings.text = str(f"{NecessarySavingsAtRetireAge:,.0f}")
       self.label_AnnuitySaving.text = str(f"{AnnuitySavings:,.0f}") + "/ rok"
       self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + "/ rok"
