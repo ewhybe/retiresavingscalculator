@@ -146,7 +146,7 @@ class Inputs(InputsTemplate):
       
       self.label_NecessarySavings.text = str(f"{NecessarySavingsAtRetireAge:,.0f}")
       self.label_AnnuitySaving.text = str(f"{AnnuitySavings:,.0f}") + "/ rok"
-      self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + " v 1. roce, poté + " + str(f"{Indexace:,.1%}" + " ročně")
+      self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + " v 1. roce, poté + " + str(f"{ng:,.1%}" + " ročně")
       self.label_PDied.text = str(f"{1-ProbabilityHasDied:,.0%}")
   
     # savings build-up
