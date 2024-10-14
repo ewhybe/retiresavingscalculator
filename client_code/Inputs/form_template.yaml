@@ -62,7 +62,7 @@ components:
   - data_bindings: []
     layout_properties: {grid_position: 'YOCPBJ,HYKOSQ'}
     name: Savings_box
-    properties: {text: '500000', type: number}
+    properties: {text: '0', type: number}
     type: TextBox
   - layout_properties: {grid_position: 'ELUGOM,VKSTZA'}
     name: label_5

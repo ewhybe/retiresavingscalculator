@@ -86,6 +86,10 @@ class Inputs(InputsTemplate):
     r = Return # real return
     i = Inflation
     g = Growth # real growth
+
+    # Ensure growth is not identical to return to prevent division by zero
+    if r==g:
+      r=r*0.999
     # nominal return as inflation + return and nominal growth as growth + inflation
     nr = r + i
     ng = g + i
@@ -182,13 +186,13 @@ class Inputs(InputsTemplate):
     # Create and display labels for the variables
     return NecessarySavingsAtRetireAge, AnnuitySavings, ConstantWageShareSavings, ProbabilityHasDied 
    
-# Plot
-    #self.plot_1.data = [
-    #go.Scatter(
+ #Plot
+   # self.plot_1.data = [
+   # go.Scatter(
     #    x=SavingsBuildup['Age'],  # x-axis data
-    #    y=SavingsBuildup['Saved'],  # y-axis data
-    #    mode='lines',  # Line chart
-    #    name='Savings Buildup'
+     #   y=SavingsBuildup['Saved'],  # y-axis data
+     #   mode='lines',  # Line chart
+     #   name='Savings Buildup'
     #)
     #]
     
