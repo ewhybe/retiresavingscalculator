@@ -15,6 +15,9 @@ class Inputs(InputsTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+
+    self.Sex_drop_down.items = ["Muž", "Žena"]
+    self.Sex_drop_down.selected_value = "Muž"
     
     # Define a list of years from 1954 to 2005
     year_list = [str(x) for x in range(20,66)]
@@ -53,10 +56,10 @@ class Inputs(InputsTemplate):
     
     self.indexace = float(self.Inflation_drop_down.selected_value) + float(self.Growth_drop_down.selected_value)
     
-    self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke dni odchodu do důchodu:" 
-    self.label_P.text = "Pravděpodobnost, že přežijete cílový věk " + self.Death_drop_down.selected_value + "let:"
-    self.label_ConstWageSaving.text = "Investice 1. rok následně zvyšovaná vždy o inflaci + reálný růst"
-    self.label_Annuity.text = "Rovnoměrné každoroční spoření:"
+    #self.label_Savings.text = "Potřebné úspory upravené o inflaci a růst mezd ke dni odchodu do důchodu:" 
+    #self.label_P.text = "Pravděpodobnost, že přežijete cílový věk " + self.Death_drop_down.selected_value + " let:"
+    #self.label_ConstWageSaving.text = "Investice 1. rok následně zvyšovaná vždy o inflaci + reálný růst"
+    #self.label_Annuity.text = "Rovnoměrné každoroční spoření:"
 
 
   
@@ -105,9 +108,10 @@ class Inputs(InputsTemplate):
     # choose the right dataset by sex
     if Sex == 'Muž':
       death_data = Male_data
+      
     else:
       death_data = Female_data
-  
+      
     # Calculate the probability of having died by the time of retirement (sex dependent)
     LivingAtRetireAge = death_data[PensionAge]
     LivingAtDeathAge = death_data[Death]
@@ -152,7 +156,8 @@ class Inputs(InputsTemplate):
       self.label_AnnuitySaving.text = str(f"{AnnuitySavings:,.0f}") + "/ rok"
       self.label_IndexedSaving.text = str(f"{ConstantWageShareSavings:,.0f}") + " v 1. roce, poté + " + str(f"{ng:,.1%}" + " ročně")
       self.label_PDied.text = str(f"{1-ProbabilityHasDied:,.0%}")
-  
+
+    
     # savings build-up
     # prepare list to fill in with calculated ages and savings in each age
     WorkYears = [Age]

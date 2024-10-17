@@ -22,6 +22,20 @@ db_schema:
       type: number
     server: full
     title: Male
+  table_3:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: Age
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: PensionAge
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: Income
+      type: string
+    server: full
+    title: Table 3
 name: RetireSavingsCalculator
 native_deps: {head_html: '<link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400;600&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet" rel="preload" as="font" crossorigin="anonymous">'}
 package_name: RetireSavingsCalculator
